@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b14">
+    <meta name="description" content="RYAN RITE DAILY LIFE TRACKER - Track your habits, goals, money, and personal growth.">
+    <title>RYANWRITE DAILY LIFE TRACKER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">R</div>
+                <div>
+                    <h2>RYANWRITE</h2>
+                    <p>DAILY LIFE TRACKER</p>
+                </div>
+            </div>
+
+            <nav class="navigation">
+                <p class="nav-heading">WORKSPACE</p>
+
+                <button class="nav-item active" data-page="dashboard">
+                    <span>◈</span> Dashboard
+                </button>
+                <button class="nav-item" data-page="habits">
+                    <span>✓</span> Daily Habits
+                </button>
+                <button class="nav-item" data-page="goals">
+                    <span>◎</span> My Goals
+                </button>
+                <button class="nav-item" data-page="finance">
+                    <span>◇</span> Money Tracker
+                </button>
+                <button class="nav-item" data-page="statistics">
+                    <span>▥</span> Statistics
+                </button>
+
+                <p class="nav-heading">PERSONAL</p>
+
+                <button class="nav-item" data-page="achievements">
+                    <span>✧</span> Achievements
+                </button>
+                <button class="nav-item" data-page="settings">
+                    <span>⚙</span> Settings
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator"></div>
+                <div>
+                    <strong>PERSONAL SYSTEM</strong>
+                    <p>Ready for growth.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main application -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">YOUR PERSONAL COMMAND CENTER</p>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="date-display">
+                        <span>📅</span>
+                        <span id="current-date">Loading date...</span>
+                    </div>
+                    <button class="profile-button" id="profile-button" aria-label="Open profile">
+                        R
+                    </button>
+                </div>
+            </header>
+
+            <!-- Welcome section -->
+            <section class="welcome-panel">
+                <div class="welcome-text">
+                    <p class="eyebrow">A NEW DAY. A NEW OPPORTUNITY.</p>
+                    <h2>Build the life you <span>envision.</span></h2>
+                    <p>Small actions. Consistent progress. Extraordinary results.</p>
+                </div>
+
+                <div class="welcome-symbol" aria-hidden="true">✦</div>
+            </section>
+
+            <!-- Dashboard statistics -->
+            <section class="stats-grid" aria-label="Daily summary">
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>DAILY COMPLETION</span>
+                        <span class="stat-icon">◈</span>
+                    </div>
+                    <h3 id="completion-value">0%</h3>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="completion-bar"></div>
+                    </div>
+                    <p id="completion-caption">Ready to start your day</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>TASKS COMPLETED</span>
+                        <span class="stat-icon">✓</span>
+                    </div>
+                    <h3 id="tasks-value">0 / 0</h3>
+                    <p>Your daily actions</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>CURRENT STREAK</span>
+                        <span class="stat-icon">♨</span>
+                    </div>
+                    <h3 id="streak-value">0 days</h3>
+                    <p>Keep showing up</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span>SAVINGS BALANCE</span>
+                        <span class="stat-icon">◇</span>
+                    </div>
+                    <h3 id="savings-value">UGX 0</h3>
+                    <p>Your financial progress</p>
+                </article>
+
+            </section>
+
+            <!-- Main dashboard columns -->
+            <section class="dashboard-grid">
+
+                <article class="panel daily-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">STAY CONSISTENT</p>
+                            <h2>Today's Habits</h2>
+                        </div>
+                        <button class="secondary-button" data-goto="habits">View all →</button>
+                    </div>
+
+                    <div class="habit-summary">
+                        <div>
+                            <strong id="habit-count">0 habits</strong>
+                            <p>Your daily checklist</p>
+                        </div>
+                        <span id="habit-percentage">0%</span>
+                    </div>
+
+                    <div class="progress-track habit-progress-track">
+                        <div class="progress-fill" id="habit-progress-bar"></div>
+                    </div>
+
+                    <div id="dashboard-habits" class="habit-list">
+                        <p class="empty-message">Your daily habits will appear here.</p>
+                    </div>
+
+                    <button class="primary-button full-width" data-goto="habits">
+                        Manage Daily Habits
+                    </button>
+                </article>
+
+                <article class="panel focus-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">YOUR BIG PICTURE</p>
+                            <h2>Life Balance</h2>
+                        </div>
+                        <span class="stat-icon">✧</span>
+                    </div>
+
+                    <p class="muted-text">
+                        Make progress across the areas that matter most.
+                    </p>
+
+                    <div id="life-balance-list" class="life-balance-list">
+                        <p class="empty-message">Your life areas will appear here.</p>
+                    </div>
+
+                    <button class="secondary-button full-width" data-goto="statistics">
+                        Explore Statistics →
+                    </button>
+                </article>
+
+            </section>
+
+            <!-- Page sections will be added in the next steps -->
+            <section id="extra-page" class="panel extra-page" hidden></section>
+
+            <footer class="app-footer">
+                <p>RYANWRITE DAILY LIFE TRACKER</p>
+                <p>YOUR JOURNEY. YOUR DISCIPLINE. YOUR FUTURE.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
