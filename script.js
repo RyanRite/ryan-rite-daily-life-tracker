@@ -48,7 +48,7 @@ function emptyDay() {
 
 function defaultData() {
     return {
-        habits: [],
+        habits: DEFAULT_HABITS.map(habit => ({ ...habit })),
         days: {},
         goals: [],
         transactions: [],
