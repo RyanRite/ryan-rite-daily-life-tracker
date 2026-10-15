@@ -18,20 +18,12 @@ const LIFE_AREAS = [
     "Creativity & Hobbies"
 ];
 
-const DEFAULT_HABITS = [
-    { id: "h1", name: "Wake up at 6:00 AM", category: "Discipline & Routine" },
-    { id: "h2", name: "Make my bed and organize my space", category: "Discipline & Routine" },
-    { id: "h3", name: "Exercise or stretch", category: "Health & Fitness" },
-    { id: "h4", name: "Drink enough water", category: "Health & Fitness" },
-    { id: "h5", name: "Study or learn something new", category: "Learning & Career" },
-    { id: "h6", name: "Work on a personal project", category: "Creativity & Hobbies" },
-    { id: "h7", name: "Review my money and spending", category: "Money & Business" },
-    { id: "h8", name: "Read or reflect", category: "Faith & Spirituality" },
-    { id: "h9", name: "Connect with someone important", category: "Personal Relationships" },
-    { id: "h10", name: "Plan tomorrow", category: "Discipline & Routine" },
-    { id: "h11", name: "Avoid unnecessary distractions", category: "Discipline & Routine" },
-    { id: "h12", name: "Prepare for a restful night", category: "Health & Fitness" }
-];
+
+const LEGACY_DEFAULT_HABIT_IDS = new Set([
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "h7", "h8", "h9", "h10", "h11", "h12"
+]);
+
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -53,9 +45,10 @@ function emptyDay() {
     };
 }
 
+
 function defaultData() {
     return {
-        habits: DEFAULT_HABITS.map(habit => ({ ...habit })),
+        habits: [],
         days: {},
         goals: [],
         transactions: [],
@@ -66,6 +59,9 @@ function defaultData() {
         }
     };
 }
+
+
+
 
 function loadData() {
     try {
@@ -88,20 +84,66 @@ function loadData() {
 
         const base = defaultData();
 
+        const cleanedHabits = parsed.habits.filter(habit =>
+            habit &&
+            typeof habit === "object" &&
+            !LEGACY_DEFAULT_HABIT_IDS.has(String(habit.id))
+        );
+
         return {
             ...base,
             ...parsed,
+            habits: cleanedHabits,
             settings: {
                 ...base.settings,
                 ...(parsed.settings || {})
             },
-            goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+            goals: Array.isArray(parsed.goals)
+                ? parsed.goals
+                : [],
             transactions: Array.isArray(parsed.transactions)
                 ? parsed.transactions
                 : []
         };
     } catch (error) {
         console.error("Could not load saved tracker data:", error);
+        return defaultData();
+    }
+}
+
+        const base = defaultData();
+
+        return {
+            ...base,
+            ...parsed,
+
+            // Remove the old built-in habits.
+            // Keep habits created by users.
+            habits: parsed.habits.filter(habit =>
+                habit &&
+                typeof habit === "object" &&
+                !LEGACY_DEFAULT_HABIT_IDS.has(habit.id)
+            ),
+
+            settings: {
+                ...base.settings,
+                ...(parsed.settings || {})
+            },
+
+            goals: Array.isArray(parsed.goals)
+                ? parsed.goals
+                : [],
+
+            transactions: Array.isArray(parsed.transactions)
+                ? parsed.transactions
+                : []
+        };
+    } catch (error) {
+        console.error(
+            "Could not load saved tracker data:",
+            error
+        );
+
         return defaultData();
     }
 }
