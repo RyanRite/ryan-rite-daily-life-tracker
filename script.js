@@ -84,30 +84,38 @@ function loadData() {
 
         const base = defaultData();
 
-        const cleanedHabits = parsed.habits.filter(habit =>
-            habit &&
-            typeof habit === "object" &&
-            !LEGACY_DEFAULT_HABIT_IDS.has(String(habit.id))
-        );
-
         return {
             ...base,
             ...parsed,
-            habits: cleanedHabits,
+            habits: parsed.habits.filter(
+                habit =>
+                    habit &&
+                    typeof habit === "object" &&
+                    !LEGACY_DEFAULT_HABIT_IDS.has(String(habit.id))
+            ),
             settings: {
                 ...base.settings,
                 ...(parsed.settings || {})
             },
-            goals: Array.isArray(parsed.goals)
-                ? parsed.goals
-                : [],
+            goals: Array.isArray(parsed.goals) ? parsed.goals : [],
             transactions: Array.isArray(parsed.transactions)
                 ? parsed.transactions
                 : []
         };
     } catch (error) {
         console.error("Could not load saved tracker data:", error);
-        return defaultData();
+
+        return {
+            habits: [],
+            days: {},
+            goals: [],
+            transactions: [],
+            settings: {
+                streakGoal: 7,
+                currency: "UGX",
+                developerName: "RYAN"
+            }
+        };
     }
 }
 
